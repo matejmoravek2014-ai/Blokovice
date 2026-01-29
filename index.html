@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blokovice | Minecraft Portál</title>
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <style>
+        :root { --primary: #00ff88; --bg: #0f1011; --card: #191b1d; --text: #e0e0e0; }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--text); scroll-behavior: smooth; }
+        
+        nav {
+            position: fixed; top: 0; width: 100%; background: rgba(15, 16, 17, 0.95);
+            backdrop-filter: blur(10px); z-index: 1000; padding: 18px 0; border-bottom: 1px solid #222;
+        }
+        .nav-content { max-width: 1100px; margin: auto; display: flex; justify-content: center; gap: 30px; }
+        .nav-content a { color: white; text-decoration: none; font-weight: 600; font-size: 0.9rem; transition: 0.3s; letter-spacing: 1px; }
+        .nav-content a:hover { color: var(--primary); }
+
+        header { 
+            height: 100vh; 
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('https://files.tendence.eu');
+            background-size: cover; background-position: center; text-align: center; padding: 0 20px;
+        }
+        header h1 { font-size: clamp(3.5rem, 12vw, 6.5rem); margin: 0; color: #fff; text-shadow: 0 0 30px rgba(0,255,136,0.5); letter-spacing: 5px; }
+        header p { font-size: 1.5rem; margin: 10px 0 30px; opacity: 0.8; }
+
+        .btn-copy {
+            background: var(--primary); color: #000; padding: 20px 45px; border-radius: 50px;
+            font-weight: 800; cursor: pointer; transition: 0.4s; border: none; font-size: 1.2rem;
+            box-shadow: 0 0 20px rgba(0,255,136,0.3);
+        }
+        .btn-copy:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(0,255,136,0.6); }
+
+        section { padding: 120px 20px 60px; max-width: 1100px; margin: auto; }
+        h2 { font-size: 2.8rem; color: #fff; margin-bottom: 50px; border-left: 6px solid var(--primary); padding-left: 25px; text-transform: uppercase; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .card { background: var(--card); padding: 35px; border-radius: 25px; border: 1px solid #222; transition: 0.3s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-8px); }
+        .card h3 { color: var(--primary); margin-top: 0; font-size: 1.5rem; margin-bottom: 20px; }
+        
+        .rule-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; font-size: 0.95rem; line-height: 1.5; color: #bbb; }
+        .rule-item::before { content: "✔"; color: var(--primary); font-weight: bold; }
+
+        .chat-window { background: #000; border-radius: 25px; height: 500px; display: flex; flex-direction: column; border: 2px solid #222; }
+        #messages { flex-grow: 1; padding: 25px; overflow-y: auto; text-align: left; }
+        .msg { background: #111; padding: 12px 18px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--primary); }
+        .chat-input { display: flex; padding: 20px; gap: 12px; background: #0a0a0a; border-radius: 0 0 25px 25px; }
+        .chat-input input { background: #151515; border: 1px solid #333; color: #fff; padding: 12px; border-radius: 8px; outline: none; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-content">
+            <a href="#">DOMŮ</a>
+            <a href="#info">O SERVERU</a>
+            <a href="#rules">PRAVIDLA</a>
+            <a href="#faq">FAQ</a>
+            <a href="#chat">LIVE CHAT</a>
+        </div>
+    </nav>
+
+    <header>
+        <h1>BLOKOVICE</h1>
+        <p>Tvůj survival, tvoje komunita.</p>
+        <button class="btn-copy" onclick="copyIP()">KOPÍROVAT IP: Blokovice-2.aternos.me:36662</button>
+        <div id="status" style="margin-top: 30px; font-weight: bold;">Zjišťuji stav serveru...</div>
+    </header>
+
+    <section id="info">
+        <h2>O serveru Blokovice</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🌍 Svět bez hranic</h3>
+                <p>Obrovská mapa, kde tvá kreativita nemá limity. Čistý survival zážitek.</p>
+            </div>
+            <div class="card">
+                <h3>🤝 Silná Komunita</h3>
+                <p>Hráči, co si pomáhají. Společné projekty a přátelská atmosféra.</p>
+            </div>
+            <div class="card">
+                <h3>🛡️ Totální Bezpečí</h3>
+                <p>Pokročilý systém ochrany a logování každého bloku. Griefeři nemají šanci.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="rules" style="background: rgba(255,255,255,0.02);">
+        <h2>Podrobná Pravidla</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🗣️ Chat a Komunita</h3>
+                <div class="rule-item">Zákaz vulgárního vyjadřování, urážek a provokování hráčů.</div>
+                <div class="rule-item">Zákaz reklamy na jiné Minecraft servery nebo weby.</div>
+                <div class="rule-item">Nespamujte chat a nepoužívejte zbytečně velká písmena (CAPS).</div>
+            </div>
+            <div class="card">
+                <h3>⚔️ Férové Hraní</h3>
+                <div class="rule-item">Zákaz jakýchkoliv cheatů (X-ray, Fly, KillAura atd.).</div>
+                <div class="rule-item">Griefing je přísně zakázán i tam, kde není residence.</div>
+                <div class="rule-item">Zákaz zneužívání bugů hry (každý bug ihned nahlas adminovi).</div>
+            </div>
+            <div class="card">
+                <h3>🏠 Stavění a Příroda</h3>
+                <div class="rule-item">Neničte krajinu (zbytečné díry, 1x1 věže, vypalování lesů).</div>
+                <div class="rule-item">Zákaz stavění pastí na hráče a nevhodných staveb.</div>
+                <div class="rule-item">Mezi stavbami různých hráčů udržujte rozumný odstup.</div>
+            </div>
+            <div class="card">
+                <h3>🐖 Entity a Farmy</h3>
+                <div class="rule-item">Zákaz AFK farem, které extrémně zatěžují server.</div>
+                <div class="rule-item">Omezte počet zvířat na jednom místě (max 20 na residenci).</div>
+                <div class="rule-item">Zákaz stavění lag-strojů z redstonu.</div>
+            </div>
+            <div class="card">
+                <h3>💰 Ekonomika a Obchod</h3>
+                <div class="rule-item">Nepodvádějte při obchodech s ostatními hráči.</div>
+                <div class="rule-item">Zákaz žebrání o itemy nebo OP u administrátorů.</div>
+                <div class="rule-item">Férově nastavujte ceny ve svých obchodech.</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <h2>Časté dotazy</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>💎 Jak získám Rank?</h3>
+                <p>Ranky dáváme za aktivitu, pomoc ostatním a loajalitu k serveru.</p>
+            </div>
+            <div class="card">
+                <h3>🕒 Jak zapnout server?</h3>
+                <p>Napiš do Live Chatu níže a někdo z nás server na Aternosu nahodí.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="chat">
+        <h2>Live Chat</h2>
+        <div class="chat-window">
+            <div id="messages">
+                <div class="msg"><b>[Blokovice]</b> Vítej! Dodržuj pravidla i v tomto chatu.</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="nick" placeholder="Jméno" style="width: 25%;">
+                <input type="text" id="text" placeholder="Zpráva..." style="flex-grow: 1;">
+                <button onclick="sendMessage()" style="background: var(--primary); border: none; padding: 10px 25px; border-radius: 8px; font-weight: bold; cursor: pointer;">POSLAT</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function copyIP() {
+            const ip = "Blokovice-2.aternos.me:36662";
+            navigator.clipboard.writeText(ip);
+            alert("IP adresa " + ip + " byla zkopírována!");
+        }
+
+        function sendMessage() {
+            const nick = document.getElementById('nick').value || "Hráč";
+            const text = document.getElementById('text').value;
+            if(!text) return;
+            const msg = document.createElement('div');
+            msg.className = 'msg';
+            msg.innerHTML = `<b>${nick}:</b> ${text}`;
+            document.getElementById('messages').appendChild(msg);
+            document.getElementById('text').value = "";
+            document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+        }
+
+        fetch('https://api.mcsrvstat.us')
+            .then(res => res.json())
+            .then(data => {
+                const s = document.getElementById('status');
+                s.innerHTML = data.online ? `<span style="color:var(--primary)">● ONLINE</span> — ${data.players.online}/${data.players.max} hráčů` : `<span style="color:#ff4444">● OFFLINE</span> — Napiš do chatu!`;
+            });
+    </script>
+</body>
+</html>
